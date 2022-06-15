@@ -1,15 +1,12 @@
 package com.sofka.tareas.controller;
 import com.sofka.tareas.domain.SubTarea;
 import com.sofka.tareas.service.SubTareaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
+@CrossOrigin
 @RestController
 public class SubTareaController {
     @Autowired
@@ -31,7 +28,7 @@ public class SubTareaController {
         return null;
     }
 
-    @DeleteMapping(value = "api/subtarea/{id}")
+    @DeleteMapping(path = "api/subtarea/{id}")
     public void deleteSubtarea(@PathVariable("id")Long id){
         subTareaRepository.borrarSubtarea(id);
     }

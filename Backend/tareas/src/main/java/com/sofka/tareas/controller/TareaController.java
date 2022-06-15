@@ -1,17 +1,14 @@
 package com.sofka.tareas.controller;
 import com.sofka.tareas.domain.Tarea;
 import com.sofka.tareas.service.TareaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
+@CrossOrigin
 @RestController
 public class TareaController {
-
     @Autowired
     private TareaService tareaRepository;
 
@@ -25,8 +22,8 @@ public class TareaController {
         return tareaRepository.crearTarea(tarea);
     }
 
-    @DeleteMapping(value = "api/{id}/tarea")
-    public void borarTarea(@PathVariable("id")Long id){
+    @DeleteMapping(value = "api/tarea/{id}")
+    public void borrarTarea(@PathVariable("id")Long id){
         tareaRepository.borrarTarea(id);
     }
 
