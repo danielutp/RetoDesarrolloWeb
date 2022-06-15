@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,26 +21,13 @@ public class TareaController {
     }
 
     @PostMapping(value = "api/tarea")
-    public Tarea save(@RequestBody Tarea tarea){
-        return tareaRepository.save(tarea);
-    }
-
-    @PutMapping(value = "api/tarea")
-    public Tarea update(@RequestBody Tarea tarea){
-        if(tarea.getId() != null){
-            return tareaRepository.save(tarea);
-        }
-        throw new RuntimeException("No existe el id para actualziar");
+    public Tarea crearTarea(@RequestBody Tarea tarea){
+        return tareaRepository.crearTarea(tarea);
     }
 
     @DeleteMapping(value = "api/{id}/tarea")
-    public void delete(@PathVariable("id")Long id){
-        tareaRepository.delete(id);
-    }
-
-    @GetMapping(value = "api/{id}/tarea")
-    public Tarea get(@PathVariable("id") Long id){
-        return tareaRepository.get(id);
+    public void borarTarea(@PathVariable("id")Long id){
+        tareaRepository.borrarTarea(id);
     }
 
 }

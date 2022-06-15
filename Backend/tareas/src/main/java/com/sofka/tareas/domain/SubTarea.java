@@ -10,20 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Data
 @Entity
 @Table(name = "subTarea")
 public class SubTarea {
-
-    public SubTarea(Long id, String nombre, boolean completado, Tarea tarea) {
-        this.id = id;
-        this.nombre = nombre;
-        this.completado = completado;
-        this.tarea = tarea;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +25,6 @@ public class SubTarea {
 
     @Column(name = "completado")
     private boolean completado;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Tarea_id_tarea", nullable = false)
     @JsonBackReference

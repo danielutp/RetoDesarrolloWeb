@@ -16,15 +16,20 @@ class TareasApplicationTests {
 	void contextLoads() {
 	}
 
-	@Autowired
+
+  /*
+  @Autowired
 	SubTareaRepository subTareaRepository;
 	@Test
-    public void testGuardarRoles() {
+
+  public void testGuardarRoles() {
 		Long idTarea = 1L;
 		Tarea tarea = new Tarea();
         SubTarea subTarea = new SubTarea(2L,"vendedor",false,tarea);
 		SubTarea subTarea1 = SubTareaRepository.save(subTarea, idTarea);
         assertNotNull(subTarea1);
     }
+
+   */
 
 }

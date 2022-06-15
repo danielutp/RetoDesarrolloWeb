@@ -13,11 +13,11 @@ public class TareaService {
         return tareaRepository.findAll();
     }
 
-    public Tarea save(Tarea tarea){
+    public Tarea crearTarea(Tarea tarea){
         return tareaRepository.save(tarea);
     }
 
-    public void delete(Long id){
+    public void borrarTarea(Long id){
         tareaRepository.delete(get(id));
     }
 

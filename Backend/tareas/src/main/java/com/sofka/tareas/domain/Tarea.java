@@ -19,13 +19,6 @@ import java.util.List;
 @Entity
 @Table(name = "tarea")
 public class Tarea {
-
-    public Tarea(Long id, String nombre, List<SubTarea> subtareas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.subtareas = subtareas;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tarea", nullable = false)

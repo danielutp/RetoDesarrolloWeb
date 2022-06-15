@@ -4,7 +4,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SubTareaRepository extends CrudRepository<SubTarea, Long> {
 
-    static SubTarea save(SubTarea subTarea, Long idTarea) {
-        return subTarea;
-    }
 }
