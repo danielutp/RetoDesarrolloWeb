@@ -153,7 +153,7 @@ mostrarTarea()
 async function crearTarea(nombre){
     
     if (nombre=="") { 
-      alert  (`El nombre es vacio ingrese otro valor`)     
+      alert  (`El nombre es vacio ingrese un nombre`)     
     }else{
 
     let options = {
