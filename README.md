@@ -9,4 +9,4 @@ Se hace el reto de un formulario donde se registra unas tareas basadas en una li
 Esta lista se crea para poder tener una grupos de items donde se pueda gestionar un CRUD.
 
 Link de Youtube:
-
+https://www.youtube.com/watch?v=_T43pneUwAY&ab_channel=DanielStevenGilCruz
