@@ -11,6 +11,7 @@ section_tareas.addEventListener("click", (e) => {
   }
 
   if (e.target.classList[0] == "completado") {
+    console.log(e.target.parentElement.parentElement.parentElement.children[3].children[0])
     let check = e.target.parentElement.parentElement.parentElement.children[3].children[0]
     let checkN = (e.target.parentElement.parentElement.parentElement.children[0])
     let checkI = (e.target.parentElement.parentElement.parentElement.children[1])
@@ -18,16 +19,12 @@ section_tareas.addEventListener("click", (e) => {
     let idH = (e.target.parentElement.parentElement.parentElement.children[0].textContent)
     let idP = (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].textContent)
 
-    if(e.target.checked) {
-      modificarSubTarea(idP,idH,nombre,true)  
-      check.disabled = true;          
-      checkI.style.color = "grey"; 
-      checkN.style.color = "grey";
-      
+    if(e.target.checked) {     
+      check.disabled = true;
+      modificarSubTarea(idP,idH,nombre,true)      
     }else{
       check.disabled = false;
-      checkI.style.color = "black";
-      checkN.style.color = "black";
+      modificarSubTarea(idP,idH,nombre,false)
     }
   }
 
@@ -82,11 +79,11 @@ const plasmarTareas = (tareas) => {
         subta += `
         <tr class="table-light">
                     <th scope="row">${subtarea.id}</th>
-                    <td>${subtarea.nombre}</td>
+                    <td class = "${subtarea.completado? "text-muted": ""}" >${subtarea.nombre}</td>
                     <td><div class="form-check form-switch">                    
-                        <input class="completado form-check-input" type="checkbox" id="flexSwitchCheckDefault">                        
+                        <input ${subtarea.completado? "checked": "unchecked"} class="completado form-check-input" type="checkbox" id="flexSwitchCheckDefault">                        
                       </div></td>
-                    <td><button type="submit" id="btnEditarSub" class="EditarSubTarea btn btn-info">Editar</button></td>
+                    <td><button type="submit" id="btnEditarSub" class="${subtarea.completado? "EditarSubTarea btn btn-info disabled": "EditarSubTarea btn btn-info"}">Editar</button></td>
                     <td><button type="submit" id="btnEliminarSub" class="EliminarSubTarea btn btn-danger">Eliminar</button></td>                                 
                   </tr>        
         `        
