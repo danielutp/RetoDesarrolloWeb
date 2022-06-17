@@ -5,12 +5,25 @@ let url = 'http://localhost:8080'
 let subTareaEdit = {}
 
 section_tareas.addEventListener("click", (e) => {
-  console.log(e.classList)
+
   if (e.target.classList[0] == "EliminarTarea") {
     eliminarTarea(e.target.previousElementSibling.textContent)
   }
 
-  console.log(e.target.classList)
+  if (e.target.classList[0] == "completado") {
+    let check = e.target.parentElement.parentElement.parentElement.children[3].children[0]
+    let checkN = (e.target.parentElement.parentElement.parentElement.children[1])
+    let checkI = (e.target.parentElement.parentElement.parentElement.children[1])
+    if(e.target.checked) {      
+      check.disabled = true;
+      checkI.style.color = "grey"; 
+      checkN.style.color = "grey";
+    }else{
+      check.disabled = false;
+      checkI.style.color = "black";
+      checkN.style.color = "black";
+    }
+  }
 
   if (e.target.classList[0] == "agregarSub") {     
     if (e.target.parentElement.children[4].textContent == "Agregar") {
@@ -64,13 +77,13 @@ const plasmarTareas = (tareas) => {
         <tr class="table-light">
                     <th scope="row">${subtarea.id}</th>
                     <td>${subtarea.nombre}</td>
-                    <td><div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">                        
+                    <td><div class="form-check form-switch">                    
+                        <input class="completado form-check-input" type="checkbox" id="flexSwitchCheckDefault">                        
                       </div></td>
                     <td><button type="submit" id="btnEditarSub" class="EditarSubTarea btn btn-info">Editar</button></td>
                     <td><button type="submit" id="btnEliminarSub" class="EliminarSubTarea btn btn-danger">Eliminar</button></td>                                 
                   </tr>        
-        `
+        `        
       })
         resultados += `
         <div class="containerTarea card border-primary mb-3">
@@ -101,8 +114,10 @@ const plasmarTareas = (tareas) => {
             </div>
                     `    
     })    
-    section_tareas.innerHTML = resultados    
+    section_tareas.innerHTML = resultados
+    
 }
+
 
 ///CRUD TAREAS
 
