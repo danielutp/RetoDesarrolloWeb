@@ -129,7 +129,6 @@ const plasmarTareas = (tareas) => {
     
 }
 
-
 ///CRUD TAREAS
 
 /**
@@ -153,6 +152,10 @@ mostrarTarea()
  */
 async function crearTarea(nombre){
     
+    if (nombre=="") { 
+      alert  (`El nombre es vacio ingrese otro valor`)     
+    }else{
+
     let options = {
       method: "POST",
       headers: {
@@ -164,7 +167,8 @@ async function crearTarea(nombre){
       })
     },
       res = await fetch(`${url}/api/tarea`, options)
-      mostrarTarea()             
+      mostrarTarea() 
+    }             
 }
 
 /**
