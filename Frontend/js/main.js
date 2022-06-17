@@ -2,16 +2,52 @@ const section_tareas = document.querySelector('.cont_tareas');
 const form = document.querySelector('#form')
 const btn = document.querySelector('#btnCrear')
 let url = 'http://localhost:8080'
+let subTareaEdit = {}
 
 section_tareas.addEventListener("click", (e) => {
+  console.log(e.classList)
   if (e.target.classList[0] == "EliminarTarea") {
     eliminarTarea(e.target.previousElementSibling.textContent)
-  }else{
-    modificarSubTarea(e.target.previousElementSibling.textContent)
-  } 
+  }
+
+  console.log(e.target.classList)
+
+  if (e.target.classList[0] == "agregarSub") {     
+    if (e.target.parentElement.children[4].textContent == "Agregar") {
+      let info = {
+        nombre:e.target.previousElementSibling.value,
+        id:e.target.parentElement.children[1].children[1].textContent
+      }
+      crearSubTarea(info.nombre,info.id)      
+    }
+    if(e.target.parentElement.children[4].textContent == "Actualizar") {
+      let form = e.target.previousElementSibling.value
+      modificarSubTarea(subTareaEdit.idPadre,subTareaEdit.idHijo,form) 
+
+    }      
+  }
+
+  if (e.target.classList[0] == "EliminarSubTarea") {
+    eliminarSubTarea(e.target.parentElement.parentElement.children[0].textContent)
+  }
+
+  if (e.target.classList[0] == "EditarSubTarea") {    
+    subTareaEdit.nombre = e.target.parentElement.parentElement.parentElement.parentElement.children[1].children[0].children[1].textContent
+    subTareaEdit.idPadre = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].textContent,
+    subTareaEdit.idHijo = e.target.parentElement.parentElement.children[0].textContent   
+    
+    let form = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].children[3]
+    let nombreB = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].children[4]
+    
+    nombreB.textContent = "Actualizar"
+    form.value = subTareaEdit.nombre
+
+  }
+
 })
 
-btn.addEventListener("click", (e) => {    
+btn.addEventListener("click", (e) => { 
+  e.preventDefault();  
     crearTarea(document.querySelector('#tarea').value)
 })
 
@@ -22,7 +58,8 @@ const plasmarTareas = (tareas) => {
     let subta = ''
     tareas.forEach(tarea => {
       console.log(tarea)
-      tarea.subtareas.forEach(subtarea => {
+      subta=''
+      tarea.subtareas.forEach(subtarea => {        
         subta += `
         <tr class="table-light">
                     <th scope="row">${subtarea.id}</th>
@@ -30,20 +67,25 @@ const plasmarTareas = (tareas) => {
                     <td><div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">                        
                       </div></td>
-                    <td><button type="submit" id="btnEditarSub" class="btn btn-info">Editar</button></td>
-                    <td><button type="submit" id="btnEliminarSub" class="btn btn-danger">Eliminar</button></td>                                 
+                    <td><button type="submit" id="btnEditarSub" class="EditarSubTarea btn btn-info">Editar</button></td>
+                    <td><button type="submit" id="btnEliminarSub" class="EliminarSubTarea btn btn-danger">Eliminar</button></td>                                 
                   </tr>        
         `
       })
         resultados += `
         <div class="containerTarea card border-primary mb-3">
+        <spam class = "spamId">${tarea.id}</spam>
                 <div class="cabezaTarea">
+                <br>
+                  <div class="d-flex justify-content-center" >            
                     <h2>${tarea.nombre}</h2>
                     <spam class = "spamId">${tarea.id}</spam>
-                    <button type="submit" id="btnEliminar${tarea.id}" class="EliminarTarea btn btn-danger">Eliminar</button>
-                    <input type="text" class="form-control" id="subtarea" aria-describedby="crear subtarea" placeholder="Subtarea">                    
-                    <button type="submit" id="btnCrearSubtarea${tarea.id}" class="btn btn-primary">Agregar</button>
-                </div>                        
+                    <button type="submit" id="btnEliminar${tarea.id}" class="EliminarTarea btn btn-danger">Eliminar</button>                  
+                  </div>                  
+                  <br>                    
+                    <input type="text" class="form-control" id="subtarea" aria-describedby="crear subtarea" placeholder="Subtarea">                   
+                    <button type="submit" id="btnCrearSubtarea${tarea.id}" class="agregarSub btn btn-primary">Agregar</button>                    
+                    </div>                        
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -105,7 +147,7 @@ async function eliminarTarea(id){
 
 ///CRUD SUBTAREAS
 
-async function crearSubTarea(){
+async function crearSubTarea(nombre,id){
     
     let options = {
       method: "POST",
@@ -114,17 +156,17 @@ async function crearSubTarea(){
       },
       body: JSON.stringify({        
             tarea: {
-                id: 6
+                id: id
             },
-            nombre: "pruebasubtarea"                 
+            nombre: nombre               
                  
       })
     },
       res = await fetch(`${url}/api/subtarea`, options)
-
+      mostrarTarea()
 }
 
-async function modificarSubTarea(id){
+async function modificarSubTarea(idP,idH,nombre){
     
     let options = {
       method: "PUT",
@@ -133,13 +175,14 @@ async function modificarSubTarea(id){
       },
       body: JSON.stringify({        
             tarea: {
-                id: 6
+                id: idP
             },
-            nombre: "pruebassssssa"                 
+            nombre: nombre                 
                  
       })
     },
-      res = await fetch(`${url}/api/subtarea/${id}`, options)
+      res = await fetch(`${url}/api/subtarea/${idH}`, options)
+      mostrarTarea()
 }
 
 async function eliminarSubTarea(id){
@@ -151,4 +194,5 @@ async function eliminarSubTarea(id){
       },     
     },
       res = await fetch(`${url}/api/subtarea/${id}`, options)
+      mostrarTarea()
 }
