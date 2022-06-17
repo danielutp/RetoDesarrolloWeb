@@ -12,12 +12,18 @@ section_tareas.addEventListener("click", (e) => {
 
   if (e.target.classList[0] == "completado") {
     let check = e.target.parentElement.parentElement.parentElement.children[3].children[0]
-    let checkN = (e.target.parentElement.parentElement.parentElement.children[1])
+    let checkN = (e.target.parentElement.parentElement.parentElement.children[0])
     let checkI = (e.target.parentElement.parentElement.parentElement.children[1])
-    if(e.target.checked) {      
-      check.disabled = true;
+    let nombre = (e.target.parentElement.parentElement.parentElement.children[1].textContent)
+    let idH = (e.target.parentElement.parentElement.parentElement.children[0].textContent)
+    let idP = (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].textContent)
+
+    if(e.target.checked) {
+      modificarSubTarea(idP,idH,nombre,true)  
+      check.disabled = true;          
       checkI.style.color = "grey"; 
       checkN.style.color = "grey";
+      
     }else{
       check.disabled = false;
       checkI.style.color = "black";
@@ -34,8 +40,8 @@ section_tareas.addEventListener("click", (e) => {
       crearSubTarea(info.nombre,info.id)      
     }
     if(e.target.parentElement.children[4].textContent == "Actualizar") {
-      let form = e.target.previousElementSibling.value
-      modificarSubTarea(subTareaEdit.idPadre,subTareaEdit.idHijo,form) 
+      let form = e.target.previousElementSibling.value     
+      modificarSubTarea(subTareaEdit.idPadre,subTareaEdit.idHijo,form,false) 
 
     }      
   }
@@ -181,7 +187,7 @@ async function crearSubTarea(nombre,id){
       mostrarTarea()
 }
 
-async function modificarSubTarea(idP,idH,nombre){
+async function modificarSubTarea(idP,idH,nombre,completado){
     
     let options = {
       method: "PUT",
@@ -192,7 +198,8 @@ async function modificarSubTarea(idP,idH,nombre){
             tarea: {
                 id: idP
             },
-            nombre: nombre                 
+            nombre: nombre,
+            completado: completado                
                  
       })
     },
