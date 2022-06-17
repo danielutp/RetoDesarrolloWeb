@@ -69,6 +69,7 @@ section_tareas.addEventListener("click", (e) => {
 btn.addEventListener("click", (e) => { 
   e.preventDefault();  
     crearTarea(document.querySelector('#tarea').value)
+    document.querySelector('#tarea').value= ""
 })
 
 
@@ -197,7 +198,8 @@ async function eliminarTarea(id){
  * @param {*} id de la tarea
  */
 async function crearSubTarea(nombre,id){
-    
+
+  if (nombre!="") {    
     let options = {
       method: "POST",
       headers: {
@@ -213,6 +215,10 @@ async function crearSubTarea(nombre,id){
     },
       res = await fetch(`${url}/api/subtarea`, options)
       mostrarTarea()
+  }else{
+    alert  (`El nombre es vacio ingrese otro nombre`)  
+  }
+
 }
 
 /**
