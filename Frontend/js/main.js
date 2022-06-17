@@ -4,17 +4,18 @@ const btn = document.querySelector('#btnCrear')
 let url = 'http://localhost:8080'
 let subTareaEdit = {}
 
+/**
+ * Se crea evento en section_tareas
+ */
 section_tareas.addEventListener("click", (e) => {
-
+  
   if (e.target.classList[0] == "EliminarTarea") {
     eliminarTarea(e.target.previousElementSibling.textContent)
   }
-
+ 
   if (e.target.classList[0] == "completado") {
     console.log(e.target.parentElement.parentElement.parentElement.children[3].children[0])
     let check = e.target.parentElement.parentElement.parentElement.children[3].children[0]
-    let checkN = (e.target.parentElement.parentElement.parentElement.children[0])
-    let checkI = (e.target.parentElement.parentElement.parentElement.children[1])
     let nombre = (e.target.parentElement.parentElement.parentElement.children[1].textContent)
     let idH = (e.target.parentElement.parentElement.parentElement.children[0].textContent)
     let idP = (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].textContent)
@@ -62,18 +63,25 @@ section_tareas.addEventListener("click", (e) => {
 
 })
 
+/**
+ * Evento para cuando le den click al boton de crear tarea
+ */
 btn.addEventListener("click", (e) => { 
   e.preventDefault();  
     crearTarea(document.querySelector('#tarea').value)
 })
 
 
+/**
+ * Se muestran las tareas dinamicamente
+ * 
+ * @param {*} tareas a mostrar 
+ */
 
 const plasmarTareas = (tareas) => {
     let resultados = ''
     let subta = ''
     tareas.forEach(tarea => {
-      console.log(tarea)
       subta=''
       tarea.subtareas.forEach(subtarea => {        
         subta += `
@@ -124,6 +132,9 @@ const plasmarTareas = (tareas) => {
 
 ///CRUD TAREAS
 
+/**
+ * Funcion para mostrar tareas
+ */
 async function mostrarTarea(){
 
     let res = await fetch(`${url}/api/tareas`)
@@ -135,6 +146,11 @@ async function mostrarTarea(){
 
 mostrarTarea()
 
+/**
+ * Funcion para crear una tarea
+ * 
+ * @param {*} nombre de la tarea a crear
+ */
 async function crearTarea(nombre){
     
     let options = {
@@ -151,6 +167,11 @@ async function crearTarea(nombre){
       mostrarTarea()             
 }
 
+/**
+ * Funcion para eliminar una tarea
+ * 
+ * @param {*} id de la tarea a eliminar
+ */
 async function eliminarTarea(id){
     
     let options = {
@@ -165,6 +186,12 @@ async function eliminarTarea(id){
 
 ///CRUD SUBTAREAS
 
+/**
+ * Funcion para crear una subtarea
+ * 
+ * @param {*} nombre nombre de la subtarea
+ * @param {*} id de la tarea
+ */
 async function crearSubTarea(nombre,id){
     
     let options = {
@@ -184,6 +211,14 @@ async function crearSubTarea(nombre,id){
       mostrarTarea()
 }
 
+/**
+ * Funcion para modificar subtarea
+ * 
+ * @param {*} idP Id de Tarea
+ * @param {*} idH Id de Subtarea
+ * @param {*} nombre Nombre de subtarea
+ * @param {*} completado Para saber si esta completado o no la subtarea
+ */
 async function modificarSubTarea(idP,idH,nombre,completado){
     
     let options = {
@@ -204,6 +239,11 @@ async function modificarSubTarea(idP,idH,nombre,completado){
       mostrarTarea()
 }
 
+/**
+ * Funcion para eliminar subtarea
+ * 
+ * @param {*} id de la subtarea a eliminar
+ */
 async function eliminarSubTarea(id){
     
     let options = {
